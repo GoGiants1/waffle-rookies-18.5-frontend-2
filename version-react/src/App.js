@@ -1,27 +1,15 @@
-import React, { Component, useRef, useState } from 'react';
+import React, {  useRef, useState } from 'react';
+import Modal from 'react-modal';
 
 import './App.css';
-
-import Counter from './Counter';
 import CreatePlayer from './CreatePlayer';
 import PlayerList from './PlayerList';
 
 
-class ListHead extends Component{
-  render(){
-    return (
-      <header>
-            <h2>
-                <button>야구 선수 추가하기</button>
-            </h2>
-            <p>
-              좋아하는 야구 선수 수:<Counter></Counter>
-            </p>
-      </header>
-
-    );
-  }
+function countLikes(players){
+  return players.filter(player => player.like).length;
 }
+
 function App() {
   
     const [inputs, setInputs] = useState({
@@ -84,23 +72,45 @@ function App() {
       });
       nextId.current += 1;
     };
-  
 
-
+    const onToggle = id => {
+      setPlayers(
+        players.map(player =>
+          player.id === id ? { ...player, like: !player.like } : player
+        )
+      );
+    };
+    
+    const count = countLikes(players);
+    
+    const[modalIsOpen,setModalIsOpen] = useState(false)
+    
 
   return (
     <div className="App">
-      <ListHead></ListHead>
+      
+      <button onClick={() => setModalIsOpen(true)}>야구 선수 추가하기</button>
+        <Modal isOpen={modalIsOpen}>
+          <CreatePlayer
+            playername={playername}
+            team={team}
+            position={position}
+            like = {like}
+            onChange={onChange}
+            onCreate={onCreate}
+          />
+          <div>
+            <button onClick={() => setModalIsOpen(false)}>닫기</button>
+          </div>
+        </Modal>
+      
+      
+        <p>   
+        좋아하는 야구 선수 수: {count}
+        </p>
       <>
-      <CreatePlayer
-          playername={playername}
-          team={team}
-          position={position}
-          like = {like}
-          onChange={onChange}
-          onCreate={onCreate}
-        />
-      <PlayerList players={players}></PlayerList>
+      
+      <PlayerList players={players} onToggle={onToggle}/>
       </>
     </div>
   );
