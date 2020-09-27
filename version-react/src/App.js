@@ -27,9 +27,10 @@ function App() {
     const [inputs, setInputs] = useState({
       playername: '',
       team: '',
-      position: ''
+      position: '',
+      like : false
     });
-    const { playername, team, position } = inputs;
+    const { playername, team, position, like } = inputs;
 
     const onChange = e => {
       const { name, value } = e.target;
@@ -44,19 +45,22 @@ function App() {
         id: 1,
         playername: '이대호',
         team: '롯데 자이언츠',
-        position: '지명타자'
+        position: '지명타자',
+        like : false
       },
       {
         id: 2,
         playername: '손아섭',
         team: '롯데 자이언츠',
-        position: '우익수'
+        position: '우익수',
+        like : false
       },
       {
         id: 3,
         playername: '김원중',
         team: '롯데 자이언츠',
-        position: '마무리 투수'
+        position: '마무리 투수',
+        like : false
       }
     ]);
   
@@ -67,7 +71,8 @@ function App() {
         id: nextId.current,
         playername,
         team,
-        position
+        position,
+        like
       };
       setPlayers([...players, player]);
   
@@ -75,6 +80,7 @@ function App() {
         playername: '',
         team: '',
         position: '',
+        like: false
       });
       nextId.current += 1;
     };
@@ -90,6 +96,7 @@ function App() {
           playername={playername}
           team={team}
           position={position}
+          like = {like}
           onChange={onChange}
           onCreate={onCreate}
         />
