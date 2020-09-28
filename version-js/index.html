@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            야구선수 리스트
+            <meta charset="UTF-8" />
+
+        </title>
+        <link rel="stylesheet" href="src/styles.css" type="text/css"/>
+    </head>
+
+<body>
+    
+<h2><button id="open">야구선수 추가하기</button></h2>
+<div class="modal-wrapper" style="display: none;">
+    <div class="modal">
+        <div class="modal-title">안녕하세요</div>
+            <div class="modal-contents">
+                <form class="js-form">
+                <input type="text" class="form" id="name"  placeholder="선수명">
+                </form>
+                <form class="js-form">
+                <input id="position" class="form" type="text" placeholder="포지션">
+                </form>
+                <form class="js-form">
+                <input id="team" class="form" type="text" placeholder="소속 구단">
+                </form>
+            </div>
+        
+        
+        <div class="close-wrapper">
+            <button id="submit" >추가</button>
+            
+            <button id="close">닫기</button>
+        </div>
+    </div>  
+</div>
+
+
+<p>좋아하는 야구선수 수: <b id="number">0</b></p>
+
+
+<div>
+    <b> 
+        <ul class="js-output">
+            <li><span>선수명: 이대호 포지션: 지명타자 소속구단: 롯데 자이언츠
+                <button class="increase">좋아요</button>
+            </span></li>
+            <li><span>선수명: 손아섭 포지션: 우익수 소속구단: 롯데 자이언츠
+                <button class="increase">좋아요</button>
+            </span></li>
+            <li><span>선수명: 김원중 포지션: 마무리 투수 소속구단: 롯데 자이언츠
+                <button class="increase">좋아요</button>
+            </span></li>
+        </ul>
+        
+    </b>    
+</div>
+
+<script src="/src/form.js"></script>
+<script src="/src/index.js"></script>
+<script src="/src/counter.js"></script>
+        
+
+
+</body>
+
+</html>
