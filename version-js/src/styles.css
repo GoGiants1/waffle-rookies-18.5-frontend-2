@@ -1,0 +1,12 @@
+.increase {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.increase .active{
+  background-color:blue;
+  color: white;
+}
