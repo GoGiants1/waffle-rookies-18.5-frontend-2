@@ -6,18 +6,19 @@ import CreatePlayer from './CreatePlayer';
 import PlayerList from './PlayerList';
 
 
-function countLikes(players){
-  return players.filter(player => player.like).length;
-}
-
 function App() {
-  
-    const [inputs, setInputs] = useState({
-      playername: '',
-      team: '',
-      position: '',
-      like : false
-    });
+    function countLikes(players){
+      return players.filter(player => player.like).length;
+    }
+
+    const defaultState= {
+      playername:'',
+      team:'',
+      position:'',
+      like:false
+    };
+    
+    const [inputs, setInputs] = useState(defaultState);
     const { playername, team, position, like } = inputs;
 
     const onChange = e => {
@@ -28,7 +29,7 @@ function App() {
       });
     };
 
-    const [players, setPlayers] = useState( [
+    const defaultPlayer=[
       {
         id: 1,
         playername: '이대호',
@@ -50,7 +51,9 @@ function App() {
         position: '마무리 투수',
         like : false
       }
-    ]);
+    ]
+
+    const [players, setPlayers] = useState(defaultPlayer);
   
     const nextId = useRef(4);
     
@@ -92,10 +95,7 @@ function App() {
       <button onClick={() => setModalIsOpen(true)}>야구 선수 추가하기</button>
         <Modal isOpen={modalIsOpen}>
           <CreatePlayer
-            playername={playername}
-            team={team}
-            position={position}
-            like = {like}
+            {...inputs}
             onChange={onChange}
             onCreate={onCreate}
           />
