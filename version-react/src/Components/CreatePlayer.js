@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { useListMakeAction, useNextId } from "../Context/List";
+import { useListMakeAction, useNextId , useListState } from "../Context/List";
+import {useHistory} from 'react-router-dom';
+
+
+
+
+
 
 const defaultPlayer = {
   playername: "",
@@ -9,13 +15,23 @@ const defaultPlayer = {
 };
 
 function CreatePlayer() {
+  const history = useHistory();
+  const players = useListState();
+
+  
   const [inputs, setInputs] = useState(defaultPlayer);
   
 
   const makeAction = useListMakeAction();
   const nextId = useNextId();
 
-  
+  const wantCancle = () => {
+    const { confirm }  = window
+
+    const isBack = confirm('정말로 취소하시겠습니까??')
+
+    if (isBack) history.push('/items')
+  }
   
 
   const onChange = (e) => {
@@ -26,6 +42,7 @@ function CreatePlayer() {
       [name]: value,
     });
   };
+
   const { playername, team, position } = inputs;
 
   const onCreate = e => {
@@ -42,9 +59,9 @@ function CreatePlayer() {
     });
     
     nextId.current += 1;
+    history.push(`/items/${nextId.current-1}`);
   };
 
-  
 
   return (
     <div>
@@ -75,9 +92,12 @@ function CreatePlayer() {
               value={team}
             />
           </li>
-          <button onClick={onCreate}>
-            등록
-          </button>
+          
+            <button onClick={onCreate}>
+              등록
+            </button>
+        
+          <button onClick={wantCancle}>취소</button>
         </ul>
       </p>
     </div>

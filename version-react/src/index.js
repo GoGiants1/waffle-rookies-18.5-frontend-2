@@ -4,14 +4,15 @@ import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import { ListProvider } from './Context/List';
 
 ReactDOM.render(
   <React.StrictMode>
-  {/* <BrowserRouter> */}
-    <App />
-  {/* </BrowserRouter>, */}
-    
+    <ListProvider>
+      <BrowserRouter>
+       <App />
+      </BrowserRouter>
+    </ListProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

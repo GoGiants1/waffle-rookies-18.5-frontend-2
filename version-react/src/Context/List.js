@@ -38,6 +38,11 @@ function listReducer(state, action) {
       return state.map((player) =>
         player.id === action.id ? { ...player, like: !player.like } : player
       );
+    case "REWRITE":
+      return state.map((player) =>
+        player.id === action.id ? action.player : player);
+    case "REMOVE":
+      return state.filter((player) => player.id !== action.id);
   }
 }
 

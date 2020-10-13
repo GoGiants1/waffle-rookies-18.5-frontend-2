@@ -1,25 +1,20 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import PlayerList from "./PlayerList";
 import { useListState } from "../Context/List";
-import CreatePlayer from "./CreatePlayer";
-import Modal from "react-modal";
+
+import {useHistory} from 'react-router-dom';
+
 
 const Main = () => {
   const players = useListState(); 
+  const history = useHistory();
 
   const counts = players.filter( player => player.like);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
   return (
     <div className="App">
-      <button onClick={() => setModalIsOpen(true)}>야구 선수 추가하기</button>
-      <Modal isOpen={modalIsOpen}>
-        <CreatePlayer />
-        <div>
-          <button onClick={() => setModalIsOpen(false)}>닫기</button>
-        </div>
-      </Modal>
+
+      <button onClick={()=> history.push(`/items/create`) }>야구 선수 추가하기</button>
 
       <p>좋아하는 야구 선수 수: {counts.length}</p>
       <>
