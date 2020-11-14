@@ -1,0 +1,25 @@
+{
+    "players" : [
+        {
+            "id": 1,
+            "playername": "이대호",
+            "team": "롯데 자이언츠",
+            "position": "지명타자",
+            "like": false
+        },
+        {
+            "id": 2,
+            "playername": "손아섭",
+            "team": "롯데 자이언츠",
+            "position": "우익수",
+            "like": false
+        },
+        {
+            "id": 3,
+            "playername": "김원중",
+            "team": "롯데 자이언츠",
+            "position": "마무리 투수",
+            "like": false
+        }
+    ]
+}
