@@ -6,6 +6,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createBrowserHistory} from "history";
 import { UserContextProvider } from './Context/UserContext';
+import 'semantic-ui-css/semantic.min.css'
 
 const history = createBrowserHistory()
 

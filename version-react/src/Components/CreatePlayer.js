@@ -33,6 +33,11 @@ function CreatePlayer() {
   const [players,setPlayers] = useState([]);
 
   useEffect(()=>{
+    const path = history.location.pathname
+    console.log(path)
+    if(!currentUser && path !=="/signup" && path !=="/signin"){
+      history.replace('/signin')
+    }
     fetchData();
   },[])
   console.log('test')

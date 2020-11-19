@@ -47,7 +47,7 @@ const Main = () => {
 
       <p>좋아하는 야구 선수 수: {counts.length}</p>
       
-      <ul>
+      <ul className="players">
         {players.map(player =>(
           <li
             key = {player.id}
@@ -58,7 +58,7 @@ const Main = () => {
           </li>
         ))}
       </ul>
-    
+
     </div>
   );
 };

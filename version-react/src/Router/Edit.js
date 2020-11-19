@@ -24,6 +24,13 @@ function Edit() {
     };
 
     useEffect(()=>{
+      const path = history.location.pathname
+      console.log(path)
+      if(!currentUser && path !=="/signup" && path !=="/signin"){
+        history.replace('/signin')
+      }
+
+
       axios.get(`http://localhost:4000/players/${params.id}`)
         .then(response =>{
             const {data} = response;

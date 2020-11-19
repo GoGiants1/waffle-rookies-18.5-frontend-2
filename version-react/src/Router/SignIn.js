@@ -2,19 +2,31 @@ import React, {useEffect, useState} from 'react';
 import {Button, Form, Popup, Radio, Segment} from 'semantic-ui-react';
 import {useUserContext} from "../Context/UserContext";
 import axios from "axios";
+import {useHistory } from 'react-router-dom';
 
-const SignIn = ({history}) => {
+const SignIn = () => {
+  const history = useHistory();
   const [userEmail, setUserEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [autoLogin, setAutoLogin] = useState(false)
+
 
   const {currentUser, setCurrentUser} = useUserContext()
 
   useEffect(() => {
-    if (currentUser) {
+    if(currentUser) {
       alert('잘못된 접근입니다.')
       history.replace('/items')
-    }
+    }else{
+    axios.get('http://localhost:4000/users').then(res =>{
+      res.data.map(user=> {
+        if(user.logged_in){
+          setCurrentUser(user)
+          history.push('/items')
+        }
+
+      })
+    })
+  }
   }, [])
 
   return (
@@ -26,17 +38,20 @@ const SignIn = ({history}) => {
         <Form className="login_form" onSubmit={() => {
           axios.get('http://localhost:4000/users').then((res) => {
             res.data.map(user=>{
-                if(user.email === userEmail && user.password === password){
-                    setCurrentUser(user)
+                if(user.email === userEmail && user.password === password){                    
+                    axios.put(`http://localhost:4000/users/${user.id}`, {...user, logged_in:true })
+                    setCurrentUser({...user, logged_in : true})
+                    console.log(currentUser)
                     history.push('/items')
                 }
             });
+            
           }).catch(e =>
             console.log(e)
             )
           }}>
           <Form.Input
-            icon="userEmail"
+            icon="mail"
             iconPosition="left"
             label="UserEmail"
             id="userEmail-input"
@@ -53,27 +68,13 @@ const SignIn = ({history}) => {
             label="Password"
             type="password"
             id="pw-input"
-            placeholder="Enter password"
+            placeholder="Enter Password"
             value={password}
             onChange={event =>
               setPassword(event.target.value)
             }
             required
           />
-
-          <Form.Input>
-            <Popup
-              trigger={<Radio
-                toggle
-                label="Sign-in automatically"
-                onChange={() => {
-                  setAutoLogin(!autoLogin)
-                }}
-              />}
-              content="자동 로그인 기능을 사용함으로, 사용자의 로그인 정보를 사용자의 컴퓨터에 저장합니다. 공공장소에서는 자동 로그인 기능을 사용하지 마십시오."
-              position="top center"
-            />
-          </Form.Input>
 
           <Button
             id="login-button"
