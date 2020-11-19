@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useListMakeAction, useNextId , useListState } from "../Context/List";
+import React, { useEffect, useState } from "react";
+
 import {useHistory} from 'react-router-dom';
-
-
+import axios from 'axios'
+import {useUserContext} from '../Context/UserContext'
 
 
 
@@ -12,18 +12,39 @@ const defaultPlayer = {
   team: "",
   position: "",
   like: false,
+  userId: ""
 };
 
 function CreatePlayer() {
-  const history = useHistory();
-  const players = useListState();
+  const{currentUser,setCurrentUser} = useUserContext();
 
-  
+  const fetchData= () =>{
+    axios.get('http://localhost:4000/players')
+    .then(response =>{
+      const {data} = response;
+      setPlayers(data);
+    })
+  }
+
+
+  const history = useHistory();
+
+
+  const [players,setPlayers] = useState([]);
+
+  useEffect(()=>{
+    fetchData();
+  },[])
+  console.log('test')
+
+  const len = players.length
+
+  const [count,setCount] = useState(len);
   const [inputs, setInputs] = useState(defaultPlayer);
   
 
-  const makeAction = useListMakeAction();
-  const nextId = useNextId();
+  // const makeAction = useListMakeAction();
+  // const nextId = useNextId();
 
   const wantCancle = () => {
     const { confirm }  = window
@@ -47,20 +68,15 @@ function CreatePlayer() {
 
   const onCreate = e => {
     e.preventDefault();
-    makeAction({
-      type: 'CREATE',
-      player : {
-        id: nextId.current,
-        playername: playername,
-        team: team,
-        position: position,
-        like:false
-      }
-    });
-    
-    nextId.current += 1;
-    history.push(`/items/${nextId.current-1}`);
+    axios.post('http://localhost:4000/players', {
+      playername, team, position, like: false
+    })
+    fetchData();
+    setCount(players.length)
+    history.push(`/items/${len+1}`);
   };
+
+ 
 
 
   return (

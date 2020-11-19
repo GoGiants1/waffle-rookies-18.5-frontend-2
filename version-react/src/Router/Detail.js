@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
-import { useListState,useListMakeAction } from '../Context/List';
- 
+
+import axios from 'axios'
 
 function Detail() {
     const params = useParams();
-
-    const players = useListState();
-    const history = useHistory();
-    const makeAction = useListMakeAction();
-
+    const [player, setPlayer] = useState();
+    const fetchPlayer= () =>{
+        axios.get(`http://localhost:4000/players/${params.id}`)
+        .then(response =>{
+            const {data} = response;
+            setPlayer(data);    
+        })
+    }
     
 
-    const thisPlayer = players.find( player => player.id === +params.id);
+    useEffect(()=>{
+      fetchPlayer();
+    },[]);
+    
 
-    const {playername, position, team,id} = thisPlayer || {};
+    console.log('상세페이지')
+
+    const history = useHistory();
+
+    const {playername, position, team, id} = player || {};
 
     const onRemove = (() => {
-        makeAction({type:'REMOVE', id})
-        history.push('/items')
+        axios.delete(`http://localhost:4000/players/${params.id}`)
+        history.replace('/items')
         }
     );
-    console.log(params);
-    console.log(players);
-    console.log(thisPlayer);
+
 
     return (
         <>
@@ -32,7 +40,7 @@ function Detail() {
             <div>
                 <b>{playername}</b> 포지션:{position} &nbsp;
                 <span>소속 구단: {team} </span>
-                <button onClick={()=>history.push(`/items/${thisPlayer.id}/edit`)}>수정하기</button>
+                <button onClick={()=>history.push(`/items/${player.id}/edit`)}>수정하기</button>
                 <button onClick={onRemove}>삭제</button>
                 <button onClick={() => history.push('/items')}>홈으로</button>
             </div> 

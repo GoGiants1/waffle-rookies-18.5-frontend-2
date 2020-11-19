@@ -4,10 +4,10 @@ import Main from '../Components/Main'
 
 
 
-function Home() {
+function SignUp() {
   return (
       <Main/>
   );
 }
 
-export default Home;
+export default SignUp;

@@ -1,25 +1,77 @@
 {
-    "players" : [
-        {
-            "id": 1,
-            "playername": "이대호",
-            "team": "롯데 자이언츠",
-            "position": "지명타자",
-            "like": false
-        },
-        {
-            "id": 2,
-            "playername": "손아섭",
-            "team": "롯데 자이언츠",
-            "position": "우익수",
-            "like": false
-        },
-        {
-            "id": 3,
-            "playername": "김원중",
-            "team": "롯데 자이언츠",
-            "position": "마무리 투수",
-            "like": false
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "최형욱",
+      "email": "choi@wafflestudio.com",
+      "password": "1234",
+      "logged_in": false
+    },
+    {
+      "id": 2,
+      "name": "변다빈",
+      "email": "davin111@wafflestudio.com",
+      "password": "1234",
+      "logged_in": false
+    },
+    {
+      "id": 3,
+      "name": "김상민",
+      "email": "sanggggg@wafflestudio.com",
+      "password": "1234",
+      "logged_in": false
+    }
+  ],
+  "players": [
+    {
+      "id": 1,
+      "playername": "이대호",
+      "team": "롯데 자이언츠",
+      "position": "지명타자",
+      "like": false,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "playername": "손아섭",
+      "team": "롯데 자이언츠",
+      "position": "외야수",
+      "like": false,
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "playername": "김원중",
+      "team": "롯데 자이언츠",
+      "position": "마무리 투수",
+      "like": false,
+      "userId": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": 0,
+      "user_id": 0,
+      "item_id": 0,
+      "content": "멋져요"
+    },
+    {
+      "id": 1,
+      "user_id": 1,
+      "item_id": 0,
+      "content": "좋아요"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "item_id": 2,
+      "content": "역시 에이스"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "item_id": 2,
+      "content": "댓글 처음 달아요"
+    }
+  ]
 }
