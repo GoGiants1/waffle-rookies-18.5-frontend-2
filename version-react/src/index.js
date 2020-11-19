@@ -4,15 +4,19 @@ import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ListProvider } from './Context/List';
+import {createBrowserHistory} from "history";
+import { UserContextProvider } from './Context/UserContext';
+import 'semantic-ui-css/semantic.min.css'
+
+const history = createBrowserHistory()
 
 ReactDOM.render(
   <React.StrictMode>
-    <ListProvider>
+    <UserContextProvider>
       <BrowserRouter>
-       <App />
+       <App history={history} />
       </BrowserRouter>
-    </ListProvider>
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

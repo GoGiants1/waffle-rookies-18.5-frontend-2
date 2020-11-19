@@ -1,49 +1,46 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useListState,useListMakeAction } from '../Context/List';
+import axios from 'axios'
 
 function Edit() {
     const history = useHistory();
-    const players = useListState();
     const params = useParams();
-    const thisPlayer = players.find( player => player.id === +params.id);
 
-    const [inputs, setInputs] = useState(thisPlayer);
+    const [playername, setName] = useState('')
+    const [team, setTeam] = useState('')
+    const [position, setPosition] = useState('')
     
-    const makeAction = useListMakeAction();
-    
-  
-    const onChange = (e) => {
-      const { name, value } = e.target;
-  
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
+
+    const onReWrite = () => {
+      const inputs={
+        playername: playername,
+        team: team,
+        position: position
+      }
+      axios.put(`http://localhost:4000/players/${params.id}`, {
+        inputs
+      } )
+      history.replace(`/items/${params.id}`)
     };
 
-    console.log(inputs);
+    useEffect(()=>{
+      const path = history.location.pathname
+      console.log(path)
+      if(!currentUser && path !=="/signup" && path !=="/signin"){
+        history.replace('/signin')
+      }
 
-    const { playername, team, position } = inputs ;
-    console.log(playername)
+
+      axios.get(`http://localhost:4000/players/${params.id}`)
+        .then(response =>{
+            const {data} = response;
+            setName(data.playername)
+            setPosition(data.position)
+            setTeam(data.team)
+        })
+    },[]);
     
-    const onReWrite = (e) => {
-      console.log('다시 쓰기 클릭')
-      makeAction({
-        type: 'REWRITE',
-        player : {
-          id: thisPlayer.id,
-          playername: playername,
-          team: team,
-          position: position,
-          like: thisPlayer.like
-        }
-      });
-      
-      history.push(`/items/${params.id}`);
-    };
   
-    console.log(players)
   
     return (
       <div>
@@ -53,8 +50,8 @@ function Edit() {
               <input
                 name="playername"
                 placeholder="선수명"
-                onChange={onChange}
                 value={playername}
+                onChange={(event)=> setName(event.target.value)}
               />
             </li>
   
@@ -62,22 +59,22 @@ function Edit() {
               <input
                 name="position"
                 placeholder="포지션"
-                onChange={onChange}
                 value={position}
+                onChange={(event)=> setPosition(event.target.value)}
               />
             </li>
             <li>
               <input
                 name="team"
                 placeholder="소속 구단"
-                onChange={onChange}
                 value={team}
+                onChange={(event)=> setTeam(event.target.value)}
               />
             </li>
             <button onClick={onReWrite}>
                 수정하기
             </button>
-            <button onClick={() => history.push(`/items/${thisPlayer.id}`)}>취소</button>
+            <button onClick={() => history.push(`/items/${params.id}`)}>취소</button>
           </ul>
         </p>
       </div>
